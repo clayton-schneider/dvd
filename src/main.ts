@@ -1,45 +1,13 @@
 import "./style.css";
-
-class Canvas {
-  width: number;
-  height: number;
-
-  constructor(width: number, height: number) {
-    this.width = width;
-    this.height = height;
-  }
-}
+import Cursor from "./Cursor";
+import Canvas from "./Canvas";
+import Simulation from "./Simulation";
 
 const canvas = new Canvas(1600, 900);
+const cursor = new Cursor(100, 100, 10, 10, 160, 90);
 
-const APP = document.querySelector<HTMLDivElement>("#app")!;
-
-APP.innerHTML = `<canvas id="canvas" width=${canvas.width} height=${canvas.height}></canvas>`;
-
-const can = document.querySelector<HTMLCanvasElement>("#canvas")!;
-const ctx = can.getContext("2d");
-
-const cursor = {
-  x: 160,
-  y: 90,
-  velX: 10,
-  velY: 10,
-  width: 160,
-  height: 90,
-
-  getRightEdge() {
-    return this.x + this.width;
-  },
-  getLeftEdge() {
-    return this.x;
-  },
-  getTopEdge() {
-    return this.y;
-  },
-  getBottomEdge() {
-    return this.y + this.height;
-  },
-};
+const sim = new Simulation();
+sim.mountCanvas(document.querySelector<HTMLDivElement>("#app")!, canvas);
 
 function main() {
   window.requestAnimationFrame(main);
@@ -69,7 +37,7 @@ function update() {
 }
 
 function render() {
-  ctx?.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.getCtx().clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx!.fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+  canvas.getCtx().fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
 }
