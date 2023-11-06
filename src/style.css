@@ -14,7 +14,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
+#canvas {
+  background-color: red;
+}
+
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -94,4 +98,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

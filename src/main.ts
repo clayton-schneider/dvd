@@ -1,24 +1,45 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import "./style.css";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+class Canvas {
+  width: number;
+  height: number;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+  }
+}
+
+const canvas = new Canvas(1600, 900);
+
+const APP = document.querySelector<HTMLDivElement>("#app")!;
+
+APP.innerHTML = `<canvas id="canvas" width=${canvas.width} height=${canvas.height}></canvas>`;
+
+const can = document.querySelector<HTMLCanvasElement>("#canvas")!;
+const ctx = can.getContext("2d");
+
+const cursor = {
+  x: 160,
+  y: 90,
+  width: 160,
+  height: 90,
+  draw() {
+    ctx?.fillRect(this.x, this.y, this.width, this.height);
+  },
+};
+
+ctx!.fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+
+function render() {
+  ctx?.clearRect(0, 0, canvas.width, canvas.height);
+  cursor.draw();
+  cursor.x += 1;
+  cursor.y += 1;
+  window.requestAnimationFrame(render);
+}
+function init() {
+  window.requestAnimationFrame(render);
+}
+
+init();
