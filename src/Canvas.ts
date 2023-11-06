@@ -14,6 +14,22 @@ class Canvas {
       .querySelector<HTMLCanvasElement>("#canvas")!
       .getContext("2d")!;
   }
+
+  getLeftEdge() {
+    return 0;
+  }
+
+  getRightEdge() {
+    return this.width;
+  }
+
+  getBottomEdge() {
+    return this.height;
+  }
+
+  getTopEdge() {
+    return 0;
+  }
 }
 
 export default Canvas;
