@@ -22,24 +22,54 @@ const ctx = can.getContext("2d");
 const cursor = {
   x: 160,
   y: 90,
+  velX: 10,
+  velY: 10,
   width: 160,
   height: 90,
-  draw() {
-    ctx?.fillRect(this.x, this.y, this.width, this.height);
+
+  getRightEdge() {
+    return this.x + this.width;
+  },
+  getLeftEdge() {
+    return this.x;
+  },
+  getTopEdge() {
+    return this.y;
+  },
+  getBottomEdge() {
+    return this.y + this.height;
   },
 };
 
-ctx!.fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+function main() {
+  window.requestAnimationFrame(main);
+
+  update();
+  render();
+}
+
+main();
+
+function update() {
+  if (cursor.getRightEdge() >= canvas.width) {
+    cursor.velX = -1 * cursor.velX;
+  }
+  if (cursor.getLeftEdge() <= 0) {
+    cursor.velX = -1 * cursor.velX;
+  }
+  if (cursor.getBottomEdge() >= canvas.height) {
+    cursor.velY = -1 * cursor.velY;
+  }
+  if (cursor.getTopEdge() <= 0) {
+    cursor.velY = -1 * cursor.velY;
+  }
+
+  cursor.x += cursor.velX;
+  cursor.y += cursor.velY;
+}
 
 function render() {
   ctx?.clearRect(0, 0, canvas.width, canvas.height);
-  cursor.draw();
-  cursor.x += 1;
-  cursor.y += 1;
-  window.requestAnimationFrame(render);
-}
-function init() {
-  window.requestAnimationFrame(render);
-}
 
-init();
+  ctx!.fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+}
