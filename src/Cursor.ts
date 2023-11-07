@@ -33,7 +33,6 @@ class Cursor {
   getBottomEdge() {
     return this.y + this.height;
   }
-  reverseVelocity() {}
 }
 
 export default Cursor;

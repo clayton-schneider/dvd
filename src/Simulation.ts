@@ -1,5 +1,5 @@
 import type Canvas from "./Canvas";
-import type Cursor from "./Cursor";
+import Cursor from "./Cursor";
 
 class Simulation {
   bounces: number;
@@ -7,7 +7,7 @@ class Simulation {
 
   constructor() {
     this.bounces = 0;
-    this.running = false;
+    this.running = true;
   }
 
   mountCanvas(entry: HTMLDivElement, canvas: Canvas) {
@@ -25,7 +25,7 @@ class Simulation {
     )!.innerHTML = `<p>Bounces: ${this.bounces.toString()} </p>`;
   }
 
-  run(canvas: Canvas, cursor: Cursor) {
+  run(canvas: Canvas, cursor: Cursor[] | Cursor) {
     window.requestAnimationFrame(() => {
       this.run(canvas, cursor);
     });
@@ -34,46 +34,60 @@ class Simulation {
     this.render(canvas, cursor);
   }
 
-  update(canvas: Canvas, cursor: Cursor) {
+  update(canvas: Canvas, cursor: Cursor[] | Cursor) {
     if (!this.running) {
       return;
     }
 
-    this.checkImpact(canvas, cursor);
+    if (Array.isArray(cursor)) {
+      cursor.forEach((c) => {
+        this.checkImpact(canvas, c);
+        c.x += c.velX;
+        c.y += c.velY;
+      });
+    } else {
+      this.checkImpact(canvas, cursor);
 
-    cursor.x += cursor.velX;
-    cursor.y += cursor.velY;
+      cursor.x += cursor.velX;
+      cursor.y += cursor.velY;
+    }
   }
 
-  render(canvas: Canvas, cursor: Cursor) {
+  render(canvas: Canvas, cursor: Cursor[] | Cursor) {
     canvas.getCtx().clearRect(0, 0, canvas.width, canvas.height);
-
-    canvas.getCtx().fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+    if (Array.isArray(cursor)) {
+      cursor.forEach((c) => {
+        canvas.getCtx().fillRect(c.x, c.y, c.width, c.height);
+      });
+    } else {
+      canvas.getCtx().fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+    }
   }
 
   // handle impact detection
   checkImpact(canvas: Canvas, cursor: Cursor) {
     // check for two edges touching
+    // improve collision detection
 
     // bottom right
     if (
-      cursor.getRightEdge() >= canvas.getRightEdge() &&
-      cursor.getBottomEdge() >= canvas.getBottomEdge()
+      cursor.getRightEdge() === canvas.getRightEdge() &&
+      cursor.getBottomEdge() === canvas.getBottomEdge()
     ) {
       this.toggleRunning();
     } else if (
-      cursor.getRightEdge() >= canvas.getRightEdge() &&
-      cursor.getTopEdge() <= canvas.getTopEdge()
+      cursor.getRightEdge() === canvas.getRightEdge() &&
+      cursor.getTopEdge() === canvas.getTopEdge()
     ) {
       this.toggleRunning();
     } else if (
-      cursor.getLeftEdge() <= canvas.getLeftEdge() &&
-      cursor.getTopEdge() <= canvas.getTopEdge()
+      cursor.getLeftEdge() === canvas.getLeftEdge() &&
+      cursor.getTopEdge() === canvas.getTopEdge()
     ) {
       this.toggleRunning();
     } else if (
-      cursor.getLeftEdge() <= canvas.getLeftEdge() &&
-      cursor.getBottomEdge() >= canvas.getBottomEdge()
+      cursor.getLeftEdge() === canvas.getLeftEdge() &&
+      cursor.getBottomEdge() === canvas.getBottomEdge()
     ) {
       this.toggleRunning();
     }
