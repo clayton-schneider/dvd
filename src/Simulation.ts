@@ -7,7 +7,7 @@ class Simulation {
 
   constructor() {
     this.bounces = 0;
-    this.running = true;
+    this.running = false;
   }
 
   mountCanvas(entry: HTMLDivElement, canvas: Canvas) {
@@ -67,6 +67,16 @@ class Simulation {
       });
     } else {
       canvas.getCtx().fillRect(cursor.x, cursor.y, cursor.width, cursor.height);
+
+      // Code needed to draw paths
+      const paths = cursor.getPath(canvas);
+
+      for (let i = 1; i < paths.length; i++) {
+        canvas.getCtx().beginPath();
+        canvas.getCtx().moveTo(paths[i - 1].x, paths[i - 1].y);
+        canvas.getCtx().lineTo(paths[i].x, paths[i].y);
+        canvas.getCtx().stroke();
+      }
     }
   }
 

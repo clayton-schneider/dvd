@@ -9,7 +9,7 @@ const CURSOR_WIDTH = CANVAS_WIDTH / 10;
 const CURSOR_HEIGHT = CANVAS_HEIGHT / 10;
 
 const canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-const cursor = new Cursor(100, 100, 10, 10, 160, 90);
+const cursor = new Cursor(100, 100, 10, 10, CURSOR_WIDTH, CURSOR_HEIGHT);
 
 function cursorFactory(n: number) {
   const cursorArr = [];
