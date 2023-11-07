@@ -1,3 +1,5 @@
+import Canvas from "./Canvas";
+
 class Cursor {
   x: number;
   y: number;
@@ -33,6 +35,8 @@ class Cursor {
   getBottomEdge() {
     return this.y + this.height;
   }
+
+  getPath(canvas: Canvas) {}
 }
 
 export default Cursor;

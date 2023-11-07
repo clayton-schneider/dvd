@@ -6,7 +6,7 @@ class Canvas {
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
-    this.html = `<canvas id="canvas" width=${this.width} height=${this.height}></canvas>`;
+    this.html = `<canvas class="bg-red-800" id="canvas" width=${this.width} height=${this.height}></canvas>`;
   }
 
   getCtx() {

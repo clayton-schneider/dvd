@@ -1,4 +1,3 @@
-import "./style.css";
 import Cursor from "./Cursor";
 import Canvas from "./Canvas";
 import Simulation from "./Simulation";
@@ -10,7 +9,7 @@ const CURSOR_WIDTH = CANVAS_WIDTH / 10;
 const CURSOR_HEIGHT = CANVAS_HEIGHT / 10;
 
 const canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-// const cursor = new Cursor(100, 100, 10, 10, 160, 90);
+const cursor = new Cursor(100, 100, 10, 10, 160, 90);
 
 function cursorFactory(n: number) {
   const cursorArr = [];
@@ -32,12 +31,12 @@ function cursorFactory(n: number) {
   }
 }
 
-const cursors = cursorFactory(1);
+// const cursors = cursorFactory(1);
 
 const sim = new Simulation();
 sim.mountCanvas(document.querySelector<HTMLDivElement>("#app")!, canvas);
 
-sim.run(canvas, cursors);
+sim.run(canvas, cursor);
 
 document.querySelector("#start")!.addEventListener("click", () => {
   sim.toggleRunning();
