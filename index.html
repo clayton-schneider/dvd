@@ -8,11 +8,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <section class="mx-auto flex justify-center">
+      <div class="w-full aspect-video" id="app">
+        <canvas class="bg-gray-200" id="canvas"></canvas>
+      </div>
+    </section>
+
     <button class="bg-green-600 px-5 py-2" id="start">Toggle Run</button>
     <div id="bounces"><p>Bounces: 0</p></div>
-    <section class="mx-auto flex justify-center">
-      <div class="my-2" id="app"></div>
-    </section>
+    <div>
+      <label for="x">Starting X Position</label>
+      <input
+        class="px-5 py-2 bg-gray-200"
+        type="number"
+        value="100"
+        name="x"
+        id="x"
+        type="text"
+      />
+
+      <label for="y">Starting Y Position</label>
+      <input
+        class="px-5 py-2 bg-gray-200"
+        type="number"
+        value="100"
+        name="y"
+        id="y"
+        type="text"
+      />
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
